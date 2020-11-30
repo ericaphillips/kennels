@@ -8,6 +8,7 @@ import { LocationList } from "./location/LocationList"
 import { AnimalList } from "./animal/AnimalList"
 import { CustomerList } from "./customer/CustomerList"
 import { EmployeeList } from "./employee/EmployeeList"
+import { EmployeeForm } from "./employee/EmployeeForm"
 
 export const ApplicationViews = (props) => {
     return (
@@ -24,7 +25,7 @@ export const ApplicationViews = (props) => {
                     <CustomerProvider>
                 {/* Render the animal list when http://localhost:3000/animals */}
                         <Route path="/animals">
-                            <AnimalList />
+                        <AnimalList />
                         </Route>
                     </CustomerProvider>
                 </LocationProvider>
@@ -36,13 +37,21 @@ export const ApplicationViews = (props) => {
                     <CustomerList />
                 </Route>
             </CustomerProvider>
-
+        <AnimalProvider>
             <EmployeeProvider>
+                <LocationProvider>
                 {/* Render the employee list when http://localhost:3000/employees */}
-                <Route path="/employees">
-                    <EmployeeList />
-                </Route>
+                {/* history.push() method makes the history object available to employeeList*/}
+                <Route exact path="/employees" render={
+                props => <EmployeeList {...props} />
+                } />
+                 {/* responds when URL changes to employees/create on button click */}
+                <Route exact path="/employees/create" render={
+                props => <EmployeeForm {...props} />
+                } />
+                </LocationProvider>
             </EmployeeProvider>
+            </AnimalProvider>
         </>
     )
 }
