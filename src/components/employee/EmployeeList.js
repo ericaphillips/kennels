@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react"
 import { EmployeeContext } from "./EmployeeProvider"
 import { Employee } from "./Employee"
+import { Link } from "react-router-dom"
 import "./Employee.css"
 
 //add props as a parameter because you're apssing a property object to the epmloyee list
@@ -31,7 +32,12 @@ export const EmployeeList = (props) => {
             Add Employee
         </button>
         <article className="employeeList">
-            {employees.map(employee => <Employee key={employee.id} employee={employee} />)}
+            {employees.map(employee => {
+                return <Link key={employee.id} to={`/employees/${employee.id}`}>
+                    <h3>{employee.name}</h3>
+                </Link>
+})
+}
         </article>
     </div>
 )
