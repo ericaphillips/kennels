@@ -40,13 +40,24 @@ export const AnimalProvider = (props) => {
         })
     }
 
+    const updateAnimal = animal => {
+        return fetch(`http://localhost:8088/animals/${animal.id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(animal)
+        })
+            .then(getAnimals)
+    }
+
     //return a context provider which has animal state,
     //addAnimal function, and getAnimal function as keys
     //any child element can access these since they're in the return
 
     return (
         <AnimalContext.Provider value={{
-            animals, addAnimal, getAnimals, getAnimalById, releaseAnimal, searchTerms, setTerms
+            animals, addAnimal, getAnimals, getAnimalById, releaseAnimal, searchTerms, setTerms, updateAnimal
         }}>
             {props.children}
         </AnimalContext.Provider>
